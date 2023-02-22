@@ -1,0 +1,13 @@
+{
+    "languageserver" : {
+    },
+    "snippets": {
+        "ultisnips.enable": false,
+        "extends": {
+            "cpp": ["c"]
+        }
+    },
+    "diagnostic" : {
+        "displayByAle": true
+    },
+}

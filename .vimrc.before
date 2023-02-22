@@ -1,0 +1,13 @@
+" Use fork before if available {
+	if filereadable(expand("~/.vimrc.before.fork"))
+		source ~/.vimrc.before.fork
+	endif
+" }
+
+" Use local before if available {
+	if filereadable(expand("~/.vimrc.before.fork"))
+		source ~/.vimrc.before.local
+	endif
+" }
+
+let g:ph_use_airline=1

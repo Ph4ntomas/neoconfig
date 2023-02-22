@@ -1,0 +1,167 @@
+" Environment {
+    " Basics {
+        set nocompatible
+        set background=dark
+    " }
+
+    "Windows Compatible {
+        if has('win32') || has('win64')
+            set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+
+            if has("multi_bytes")
+                set encoding=utf-8
+                setglobal fileencoding=utf-8
+
+                set fileencoding=ucs-bom,utf-8,itf-16le,cp1252,iso-8859-15
+            endif
+        endif
+    "}
+" }
+
+" Bundles {
+    call plug#begin('~/.vim/bundle')
+
+        " Enable the use of plugins groups.
+        " In .vimrc.before add groups you want to use.
+        if !exists('g:ph_bundle_groups')
+            let g:ph_bundle_groups=[
+                        \ 'general',
+                        \ 'writing',
+                        \ 'programming',
+                        \ 'coc',
+                        \ 'haskell',
+                        \ 'html',
+                        \ 'ruby',
+                        \ 'go',
+                        \ 'rust'
+                        \ ]
+        endif
+
+        " Disable all bundles from .vimrc.before file
+        if !exists('g:ph_disable_bundles')
+            " General purpose {
+                if count(g:ph_bundle_groups, 'general')
+                    Plug 'Ph4ntomas/vim-auto-header'
+
+                    Plug 'preservim/nerdtree'
+                    Plug 'Xuyuanp/nerdtree-git-plugin'
+
+                    Plug 'altercation/vim-colors-solarized'
+                    Plug 'spf13/vim-colors'
+                    Plug 'flazz/vim-colorschemes'
+
+                    Plug 'tpope/vim-surround'
+                    Plug 'tpope/vim-repeat'
+                    Plug 'rhysd/conflict-marker.vim'
+                    Plug 'jiangmiao/auto-pairs'
+                    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin'}
+                    Plug 'junegunn/fzf.vim'
+                    Plug 'mg979/vim-visual-multi'
+                    Plug 'vim-scripts/sessionman.vim'
+                    Plug 'vim-scripts/matchit.zip'
+
+                    if (has("python") || has("python3")) && !exists('g:ph_use_airline')
+                        Plug 'powerline/powerline'
+                    else
+                        Plug 'vim-airline/vim-airline'
+                        Plug 'vim-airline/vim-airline-themes'
+                    endif
+
+                    Plug 'powerline/fonts'
+                    Plug 'bling/vim-bufferline'
+                    Plug 'easymotion/vim-easymotion'
+                    Plug 'mbbill/undotree'
+                    Plug 'Yggdroot/indentline'
+
+                    if !exists('g:ph_no_views')
+                        Plug 'vim-scripts/restore_view.vim'
+                    endif
+
+                    Plug 'mhinz/vim-signify'
+                    Plug 'tpope/vim-abolish'
+                    Plug 'osyo-manga/vim-over'
+                    Plug 'kana/vim-textobj-user'
+                    Plug 'kana/vim-textobj-indent'
+                    Plug 'gcmt/wildfire.vim'
+                endif
+            " }
+
+            " Writing {
+                if count(g:ph_bundle_groups, 'writing')
+                    Plug 'reedes/vim-litecorrect'
+                    Plug 'reedes/vim-textobj-sentence'
+                    Plug 'reedes/vim-textobj-quote'
+                    Plug 'reedes/vim-wordy'
+                endif
+            " }
+
+            " General Programming {
+                if count(g:ph_bundle_groups, 'programming')
+                    Plug 'dense-analysis/ale'
+                    Plug 'tpope/vim-fugitive'
+                    Plug 'mattn/webapi-vim'
+                    Plug 'mattn/gist-vim'
+                    Plug 'preservim/nerdcommenter'
+                    Plug 'tpope/vim-commentary'
+                    Plug 'godlygeek/tabular'
+                    Plug 'luochen1990/rainbow'
+                    Plug 'peitalin/vim-jsx-typescript'
+                    Plug 'leafgarland/typescript-vim'
+                    Plug 'brgmnn/vim-opencl'
+
+                    if executable('ctags')
+                        Plug 'majutsushi/tagbar'
+                    endif
+                endif
+            " }
+
+            " Snippets & Auto-Complete {
+                if count(g:ph_bundle_groups, 'coc')
+                    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+                    Plug 'neoclide/coc-snippets'
+                    "Plug 'sirver/ultisnips'
+                    Plug 'honza/vim-snippets'
+                    Plug 'jackguo380/vim-lsp-cxx-highlight'
+                endif
+            " }
+
+            " Haskell {
+                if count(g:ph_bundle_groups, 'haskell')
+
+                endif
+            " }
+
+            " HTML {
+                if count(g:ph_bundle_groups, 'html')
+                endif
+            " }
+
+            " Ruby {
+                if count(g:ph_bundle_groups, 'ruby')
+                endif
+            " }
+
+            " Go {
+                if count(g:ph_bundle_groups, 'go')
+                endif
+            " }
+
+            " Rust {
+                if count(g:ph_bundle_groups, 'rust')
+                endif
+            " }
+        endif
+
+        " Use fork bundles if available {
+            if filereadable(expand("~/.vimrc.bundles.fork"))
+                source ~/.vimrc.bundles.fork
+            endif
+        " }
+
+        " Use local bundles if available {
+            if filereadable(expand("~/.vimrc.bundles.fork"))
+                source ~/.vimrc.bundles.local
+            endif
+        " }
+    call plug#end()
+" }
