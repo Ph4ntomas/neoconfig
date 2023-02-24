@@ -5,7 +5,7 @@
 " }
 
 " Use local before if available {
-	if filereadable(expand("~/.vimrc.before.fork"))
+	if filereadable(expand("~/.vimrc.before.local"))
 		source ~/.vimrc.before.local
 	endif
 " }
