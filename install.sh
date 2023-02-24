@@ -41,16 +41,17 @@ function setup_vim_plug() {
 function make_symlink() {
     echo "Creating symbolic links"
 
-    pushd ~
+    pushd ~ 2>&1 >/dev/null
         ln -s ~/.neoconfig/.vim
         ln -s ~/.neoconfig/.vimrc
         ln -s ~/.neoconfig/.vimrc.before
         ln -s ~/.neoconfig/.vimrc.bundles
 
-        pushd ~/.config
+        pushd ~/.config >/dev/null
             ln -s ~/.neoconfig/config/nvim
-        popd
-    popd
+            mkdir coc
+        popd >/dev/null
+    popd >/dev/null
 }
 
 $GIT clone https://github.com/Ph4ntomas/neoconfig.git ~/.neoconfig
