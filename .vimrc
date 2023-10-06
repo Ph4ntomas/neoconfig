@@ -1,5 +1,5 @@
 " Environment {
-    " Identify plateform { 
+    " Identify plateform {
         silent function! OSX()
             return has('macunix')
         endfunction
@@ -205,7 +205,7 @@
         autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
         autocmd BufNewFile,BufRead *.cmake, CMakeLists.txt set filetype=cmake
     " }
-    
+
     " Fix C and C++ comments
     autocmd FileType c,cpp set comments=sr:/*,mb:**,ex:*/
 
@@ -557,3 +557,8 @@
     endfunction
     call InitializeDirectories()
 " }
+
+" Load local file if exists
+if filereadable(expand("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
