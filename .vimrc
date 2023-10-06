@@ -267,8 +267,8 @@
         if isdirectory(expand("~/.vim/bundle/nerdtree"))
             let g:NERDShutUp=1
 
-            map <C-e> :NERDTreeToggle<CR>
-            map <leader>e :NERDTreeFind<CR>
+            map <C-e> :NERDTreeFind<CR>
+            map <leader>e :NERDTreeToggle<CR>
             nmap <leader>nt :NERDTreeFind<CR>
 
             let NERDTreeShowBookmarks=1
@@ -282,7 +282,47 @@
         endif
     "}
 
+    "Nvim-web-devicons {
+        if isdirectory(expand("~/.vim/bundle/nvim-web-devicons"))
+            "lua require('nvim-web-devicons').setup()
+        endif
+    "}
+
+    "Nvim-tree {
+        if isdirectory(expand("~/.vim/bundle/neo-tree.nvim"))
+            lua require('neo-tree').setup({
+                        \   event_handlers = {
+                        \       {
+                        \           event = "file_opened",
+                        \           handler = function(_)
+                        \               require("neo-tree.command").execute({ action = "close" })
+                        \           end
+                        \       },
+                        \   },
+                        \   window = {
+                        \       mappings = {
+                        \           ['u'] = 'navigate_up'
+                        \       }
+                        \   }
+                        \})
+
+            map <silent><C-e> :Neotree toggle reveal<CR>
+        endif
+    "}
+
     " Fzf {
+    " }
+
+    " Telescope {
+        if isdirectory(expand("~/.vim/bundle/telescope.nvim"))
+            nnoremap <leader>ff <cmd>Telescope find_files<cr>
+            nnoremap <leader>fg <cmd>Telescope live_grep cwd=%:p:h<cr>
+            nnoremap <leader>fb <cmd>Telescope buffers<cr>
+            nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+            lua require('telescope').setup()
+            lua require('telescope').load_extension('fzy_native')
+        endif
     " }
 
     " Visual Multi {

@@ -43,9 +43,6 @@
                 if count(g:ph_bundle_groups, 'general')
                     Plug 'Ph4ntomas/vim-auto-header'
 
-                    Plug 'preservim/nerdtree'
-                    Plug 'Xuyuanp/nerdtree-git-plugin'
-
                     Plug 'altercation/vim-colors-solarized'
                     Plug 'spf13/vim-colors'
                     Plug 'flazz/vim-colorschemes'
@@ -54,11 +51,28 @@
                     Plug 'tpope/vim-repeat'
                     Plug 'rhysd/conflict-marker.vim'
                     Plug 'jiangmiao/auto-pairs'
-                    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin'}
-                    Plug 'junegunn/fzf.vim'
                     Plug 'mg979/vim-visual-multi'
                     Plug 'vim-scripts/sessionman.vim'
                     Plug 'vim-scripts/matchit.zip'
+
+                    if has('nvim')
+                        Plug 'nvim-lua/plenary.nvim'
+                        Plug 'MunifTanjim/nui.nvim'
+
+                        Plug 'nvim-telescope/telescope.nvim', { 'rev': '0.1.2' }
+                        Plug 'nvim-telescope/telescope-fzy-native.nvim'
+
+                        Plug 'nvim-tree/nvim-web-devicons'
+                        Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v3.x' }
+                    else
+                        "In vim we use fzf instead of telescope
+                        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin'}
+                        Plug 'junegunn/fzf.vim'
+
+                        "Nerdtree is used in vim, as neo-tree is nvim only
+                        Plug 'Xuyuanp/nerdtree-git-plugin'
+                        Plug 'preservim/nerdtree'
+                    endif
 
                     if (has("python") || has("python3")) && !exists('g:ph_use_airline')
                         Plug 'powerline/powerline'
