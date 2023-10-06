@@ -76,7 +76,7 @@
     endif
 
     if !exists('g:ph_no_autochdir')
-        autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+        autocmd VimEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
     endif
 
     set updatetime=300
@@ -132,6 +132,8 @@
         let g:solarized_contrast="normal"
         let g:solarized_visibility="normal"
         color solarized
+        highlight! Function ctermfg=33 guifg=#40ffff
+        highlight clear Identifier
     endif
 
     set tabpagemax=15
@@ -405,21 +407,99 @@
         endif
     " }
 
-    " CoC {
-        inoremap <silent><expr> <TAB>
-                    \ pumvisible() ? "\<C-n>" :
-                    \ coc#expandableOrJumpable() ?
-                    \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-                    \ CheckBackspace() ? "\<TAB>" :
-                    \ coc#refresh()
+    " Cscope_maps {
+        if isdirectory(expand("~/.vim/bundle/cscope_maps.nvim/"))
+            "let cscope_config = {\
+                "disable_maps = true, \
+            "}
+            lua require("cscope_maps").setup({
+                                              \ disable_maps = true,
+                                              \ cscope = {
+                                                    \ picker = "telescope",
+                                                    \ skip_picker_for_single_result = true
+                                                \}
+                                           \})
 
-        inoremap <silent><expr> <S-TAB>
-                    \ pumvisible() ? "\<C-p>" : "\<S-TAB>"
+            "Find assignments to this symbol
+            nnoremap <silent> <leader>sa :exe "Cscope find a" expand('<cword>')<CR>
+
+            "Find functions calling this function
+            nnoremap <silent> <leader>sc :exe "Cscope find c" expand('<cword>')<CR>
+
+            "Find functions called by this function
+            nnoremap <silent> <leader>sd :exe "Cscope find d" expand('<cword>')<CR>
+
+            "Find this egrep pattern
+            nnoremap <silent> <leader>se :exe "Cscope find e" expand('<cword>')<CR>
+
+            "Find this file
+            nnoremap <silent> <leader>sf :exe "Cscope find f" expand('<cword>')<CR>
+
+            "Find this definition
+            nnoremap <silent> <leader>sg :exe "Cscope find g" expand('<cword>')<CR>
+
+            "Find files #including this file
+            nnoremap <silent> <leader>si :exe "Cscope find i" expand('<cword>')<CR>
+
+            "Find this C symbol
+            nnoremap <silent> <leader>ss :exe "Cscope find s" expand('<cword>')<CR>
+
+            "Find this text string
+            nnoremap <silent> <leader>st :exe "Cscope find t" expand('<cword>')<CR>
+        endif
+    " }
+
+    "CoC {
+        set updatetime=300
+
+        inoremap <silent><expr> <TAB>
+                    \ coc#pum#visible() ? coc#pum#next(1) :
+                    \ CheckBackspace() ? "\<Tab>" :
+                    \ coc#refresh()
+        inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
         function! CheckBackspace() abort
             let col = col('.') - 1
             return !col || getline('.')[col - 1]  =~# '\s'
         endfunction
+
+        if has('nvim')
+            inoremap <silent><expr> <c-space> coc#refresh()
+        else
+            inoremap <silent><expr> <c-@> coc#refresh()
+        endif
+
+        " Use `[g` and `]g` to navigate diagnostics
+        " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
+        nmap <silent> [g <Plug>(coc-diagnostic-prev)
+        nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+        nnoremap <silent> gd <Plug>(coc-definition)
+        nnoremap <silent> gy <Plug>(coc-type-definition)
+        nnoremap <silent> gi <Plug>(coc-implementation)
+        nnoremap <silent> gr <Plug>(coc-references)
+
+        nnoremap <silent> K :call ShowDocumentation()<CR>
+
+        function! ShowDocumentation()
+            if CocAction('hasProvider', 'hover')
+                call CocActionAsync('doHover')
+            else
+                call feedkeys('K', 'in')
+            endif
+        endfunction
+
+        " Applying code actions to the selected code block
+        " Example: `<leader>aap` for current paragraph
+        xmap <leader>a  <Plug>(coc-codeaction-selected)
+        nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+        " Remap keys for applying code actions at the cursor position
+        nmap <leader>ac  <Plug>(coc-codeaction-cursor)
+        " Remap keys for apply code actions affect whole buffer
+        nmap <leader>as  <Plug>(coc-codeaction-source)
+        " Apply the most preferred quickfix action to fix diagnostic on the current line
+        nmap <leader>qf  <Plug>(coc-fix-current)
 
         let g:coc_snippet_next = '<C-k>'
         let g:coc_snippet_prev = '<C-j>'

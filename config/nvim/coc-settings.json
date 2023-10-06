@@ -8,6 +8,6 @@
         }
     },
     "diagnostic" : {
-        "displayByAle": true
+        "displayByAle": false
     },
 }

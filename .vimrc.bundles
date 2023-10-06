@@ -111,7 +111,7 @@
 
             " General Programming {
                 if count(g:ph_bundle_groups, 'programming')
-                    Plug 'dense-analysis/ale'
+                    "Plug 'dense-analysis/ale'
                     Plug 'tpope/vim-fugitive'
                     Plug 'mattn/webapi-vim'
                     Plug 'mattn/gist-vim'
@@ -125,6 +125,10 @@
 
                     if executable('ctags')
                         Plug 'majutsushi/tagbar'
+                    endif
+
+                    if executable('cscope') && has('nvim')
+                        Plug 'dhananjaylatkar/cscope_maps.nvim'
                     endif
                 endif
             " }
