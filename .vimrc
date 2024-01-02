@@ -203,7 +203,7 @@
         autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
         autocmd BufNewFile,BufRead *.coffee set filetype=coffee
         autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
-        autocmd BufNewFile,BufRead *.cmake, CMakeLists.txt set filetype=cmake
+        autocmd BufNewFile,BufRead *.cmake,CMakeLists.txt set filetype=cmake
     " }
 
     " Fix C and C++ comments
